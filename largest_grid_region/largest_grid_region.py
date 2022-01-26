@@ -46,7 +46,7 @@ def find_most_adjacent(grid):
         cur, prev = prev, cur
         region_index[cur] = [None] * len(grid)
 
-        # Look for connected elements from the left side or above.
+        # Look for connected pixels from the left side or the above line.
         for col in range(0, len(grid)):
             if grid[row][col] == grid[row - 1][col]:
                 region_index[cur][col] = region_index[prev][col]
@@ -56,14 +56,14 @@ def find_most_adjacent(grid):
                 region_index[cur][col] = region_index[cur][col - 1]
                 regions[region_index[cur][col]].count += 1
     
-        # Look for connected elements from the right side.
+        # Look for connected pixels from the right side.
         for col in range(len(grid) - 2, -1, -1):
             if (region_index[cur][col] is None and region_index[cur][col + 1] is not None and
                 grid[row][col] == grid[row][col + 1]):
                 region_index[cur][col] = region_index[cur][col + 1]
                 regions[region_index[cur][col]].count += 1
 
-        # Create new regions for unconnected elements.
+        # Create new regions for unconnected pixels.
         for col in range(0, len(grid)):
             if region_index[cur][col] is None:
                 if col == 0 or grid[row][col] != grid[row][col - 1]:
